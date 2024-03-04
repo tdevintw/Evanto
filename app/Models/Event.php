@@ -11,7 +11,7 @@ class Event extends Model
     protected $table ="events";
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'organizer_id');
     }
     public function ticket(){
         return $this->hasMany(Ticket::class);
@@ -19,10 +19,9 @@ class Event extends Model
     public function reserverequests(){
         return $this->hasMany(ReserveRequest::class);
     }
-    public function eventrequesr(){
-        return $this->hasOne(EventRequest::class);
-    }
+
     public function category(){
-        return $this->hasOne(Category::class);
+        return $this->hasOne(Category::class, 'id', 'category_id');
+
     }
 }
