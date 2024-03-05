@@ -12,17 +12,102 @@
                         <div class="row">
                             <!-- Small table -->
                             <div class="col-md-12 my-4">
-                                <h2 class="h4 mb-1">Edit Category</h2>
-                                <p class="mb-3">here you can Edit the platform's categories</p>
+                                <h2 class="h4 mb-1">Add Event</h2>
+                                <p class="mb-3">here you can Add the platform's events</p>
                                 <div style="display:flex;flex-direction:flex;justify-content:center">
-                                    <form  style="width:50%" action="{{route('categories.update',$category->id)}}">
-                                        @method('PUT')
+                                    <form style="width:50%" action="{{ route('events.store') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="organize_id" value="{{ Auth::user()->id }}">
                                         <div class="form-group">
-                                          <label for="exampleInputEmail1">Catgeory</label>
-                                          <input style="width:50%" name="category" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$category->name}}">
+                                            <label for="exampleInputEmail1">Title</label>
+                                            <input style="width:50%" name="title" type="text" class="form-control"
+                                                id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                placeholder="Title">
                                         </div>
+                                        @if ($errors->has('title'))
+                                            <p class="text-danger">{{ $errors->first('title') }}</p>
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Description</label>
+                                            <input style="width:50%" name="description" type="text"
+                                                class="form-control" id="exampleInputEmail1"
+                                                aria-describedby="emailHelp" placeholder="Description">
+                                        </div>
+                                        @if ($errors->has('description'))
+                                            <p class="text-danger">{{ $errors->first('description') }}</p>
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Category</label>
+                                            <select  name="category_id" class="form-select"
+                                                aria-label="Default select example">
+                                                <option>Select Category</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @if ($errors->has('category_id'))
+                                            <p class="text-danger">{{ $errors->first('category_id') }}</p>
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Tickets</label>
+                                            <input style="width:50%" name="tickets" type="number"  class="form-control"
+                                                id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                placeholder="Number of tickets">
+                                        </div>
+                                        @if ($errors->has('tickets'))
+                                            <p class="text-danger">{{ $errors->first('tickets') }}</p>
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Image</label>
+                                            <input style="width:50%" name="image" type="file" class="form-control"
+                                                id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                placeholder="Category">
+                                        </div>
+                                        @if ($errors->has('image'))
+                                            <p class="text-danger">{{ $errors->first('image') }}</p>
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Location</label>
+                                            <input style="width:50%" name="location" type="text" class="form-control"
+                                                id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                placeholder="Location">
+                                        </div>
+                                        @if ($errors->has('location'))
+                                            <p class="text-danger">{{ $errors->first('location') }}</p>
+                                        @endif
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Date</label>
+                                            <input style="width:50%" name="date" type="datetime-local"
+                                                class="form-control" id="exampleInputEmail1"
+                                                aria-describedby="emailHelp" placeholder="Location">
+                                        </div>
+                                        @if ($errors->has('date'))
+                                            <p class="text-danger">{{ $errors->first('date') }}</p>
+                                        @endif
+                                        <div class="form-group" style="display: flex ; gap:5px">
+                                            <label for="exampleInputEmail1">Reserve Method:</label>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="reserve_method"
+                                                    id="exampleRadios1" value="default">
+                                                <label class="form-check-label" for="exampleRadios1">
+                                                    Default
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="reserve_method"
+                                                    id="exampleRadios2" value="request">
+                                                <label class="form-check-label" for="exampleRadios2">
+                                                    Request
+                                                </label>
+                                            </div>
+                                        </div>
+                                        @if ($errors->has('reserve_method'))
+                                        <p class="text-danger">{{ $errors->first('reserve_method') }}</p>
+                                    @endif
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                      </form>
+                                    </form>
                                 </div>
                             </div> <!-- customized table -->
                         </div> <!-- end section -->

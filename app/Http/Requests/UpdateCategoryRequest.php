@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CategoryRuleRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCategoryRequest extends FormRequest
@@ -22,7 +23,13 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category' => ['required']
+            'name' => ['required', new CategoryRuleRequest],
+        ];
+    }
+
+    public function messages(){
+        return [
+            'name.required' => 'Category name cant be null',
         ];
     }
 }

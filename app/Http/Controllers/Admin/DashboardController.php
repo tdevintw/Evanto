@@ -11,9 +11,7 @@ use App\Models\User;
 // use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
-
-
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -34,7 +32,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $users = User::all();
-        return view('Admin.users',compact('user','users'));
+        return view('Admin.users.users',compact('user','users'));
 
     }
         public function acces(Request $request)
@@ -99,4 +97,25 @@ class DashboardController extends Controller
     {
         //
     }
+
+    public function events(){
+
+        $events = Event::where('status','pending')->get();
+        $user = Auth::user();
+        return view('Admin.events.Requests',compact('user','events'));
+    }
+
+    public function accept(Event $event){
+        $event->status = 'accepted';
+        $event->save();
+        return redirect()->route('requests');
+    }
+    public function reject(Event $event){
+
+        $event->status = 'rejected';
+        $event->save();
+        return redirect()->route('requests');
+    }
+
+
 }

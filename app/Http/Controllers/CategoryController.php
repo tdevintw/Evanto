@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         $user = Auth::user();
-        return view('Admin.categories',compact('categories','user'));
+        return view('Admin.categories.categories',compact('categories','user'));
     }
 
     /**
@@ -24,7 +24,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        return view('Admin.categories.category_create',compact('user'));
     }
 
     /**
@@ -32,7 +33,8 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        Category::create($request->validated());
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -49,7 +51,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         $user = Auth::user();
-        return view('Admin.category_edit',compact('category','user'));
+        return view('Admin.categories.category_edit',compact('category','user'));
     }
 
     /**
@@ -57,6 +59,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
+
         $category->update($request->validated());
         return redirect()->route('categories.index');
     }

@@ -14,6 +14,9 @@
                             <div class="col-md-12 my-4">
                                 <h2 class="h4 mb-1">Categories Management</h2>
                                 <p class="mb-3">here you can manage the platform's categories</p>
+                                <div style="margin-bottom: 10px">
+                                    <a href="{{route('categories.create')}}"><button type="button" class="btn btn-success">New Category</button></a>
+                                </div>
                                 <div class="card shadow">
                                     <div class="card-body">
                                         <!-- table -->
@@ -41,7 +44,7 @@
                                                                 <form action="{{ route('categories.destroy',$category->id) }}"
                                                                     method="post">
                                                                     @csrf
-                                                                    @method('PUT')
+                                                                    @method('DELETE')
                                                                     <input type="hidden" name="id"
                                                                         value="{{ $user->id }}">
                                                                     <button type="submit"
@@ -58,6 +61,9 @@
 
                                             </tbody>
                                         </table>
+                                        @if (count($categories)==0)
+                                        <h3 style="text-align: center">There is no records for the moment</h3>    
+                                        @endif
                                     </div>
                                 </div>
                             </div> <!-- customized table -->

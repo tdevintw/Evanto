@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\EventRuleRequest;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreEventRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StoreEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,31 @@ class StoreEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', new EventRuleRequest,],
+            'description' => ['required', new EventRuleRequest],
+            'category_id' => ['required','integer'],
+            'image' => 'required','image|mimes:jpeg,png,jpg,svg|max:2048',
+            'location' => ['required', new EventRuleRequest],
+            'date' => ['required'],
+            'reserve_method' => ['required','in:default,request'],
+            'tickets' => ['required'],
+
+            
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'title is reuiqred',
+            'description.required' => 'description is required',
+            'category_id.required' => 'Category is required',
+            'category_id.integer' => 'Select  a category',
+            'image.required' => 'image is required',
+            'location.required' => 'location is required',
+            'date.required' => 'date is required',
+            'reserve_method.required' => 'reserve method is required'
+    
         ];
     }
 }

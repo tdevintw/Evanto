@@ -12,8 +12,11 @@
                         <div class="row">
                             <!-- Small table -->
                             <div class="col-md-12 my-4">
-                                <h2 class="h4 mb-1">Users Management</h2>
-                                <p class="mb-3">here you can manage the platform's users</p>
+                                <h2 class="h4 mb-1">events Management</h2>
+                                <p class="mb-3">here you can manage the platform's events</p>
+                                <div style="margin-bottom: 10px">
+                                    <a href="{{route('events.create')}}"><button type="button" class="btn btn-success">New Event</button></a>
+                                </div>
                                 <div class="card shadow">
                                     <div class="card-body">
                                         <!-- table -->
@@ -21,52 +24,50 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>User</th>
-                                                    <th>Email</th>
-                                                    <th>Role</th>
-                                                    <th>Acces</th>
+                                                    <th>Title</th>
+                                                    <th>Description</th>
+                                                    <th>Owner</th>
+                                                    <th>Category</th>
+                                                    <th>Status</th>
+                                                    <th>Image</th>
+                                                    <th>Date</th>
+                                                    <th>Loaction</th>
+                                                    <th>Reserve Method</th>
                                                     <th>Created_at</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($users as $user)
+                                                @foreach ($events as $event)
                                                     <tr>
-                                                        <td>{{ $user->id }}</td>
-                                                        <td>{{ $user->name }}</td>
-                                                        <td>{{ $user->email }}</td>
-                                                        <td>{{ $user->role }}</td>
-                                                        <td>{{ $user->acces }}</td>
-                                                        <td>{{ $user->created_at }}</td>
+                                                        <td>{{ $event->id }}</td>
+                                                        <td>{{ $event->title }}</td>
+                                                        <td>{{ $event->description }}</td>
+                                                        <td>{{ $event->user->name }}</td>
+                                                        <td>{{ $event->category->name }}</td>
+                                                        <td>{{ $event->status }}</td>
+                                                        <td><img style="width:50px" src="{{asset('storage/' .  $event->image )}}" alt=""></td>
+                                                        <td>{{ $event->date }}</td>
+                                                        <td>{{ $event->location }}</td>
+                                                        <td>{{ $event->reserve_method}}</td>
+                                                        <td>{{ $event->created_at }}</td>
                                                         <td>
                                                             <button type="button" class="btn btn-success"
                                                                 data-toggle="dropdown">Actions</button>
 
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                @if ($user->acces == "authorized")
-                                                                 <form action="{{ route('dashboard.acces') }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $user->id }}">
-                                                                    <button type="submit"
-                                                                        class="dropdown-item ">Ban</button>
-                                                                </form>   
-                                                                @else
-                                                                 <form action="{{ route('dashboard.acces') }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $user->id }}">
-                                                                    <button type="submit"
-                                                                        class="dropdown-item ">Unban</button>
-                                                                </form>    
-                                                                @endif
-                                                                
-                                                               
 
-                                                                {{-- <a class="dropdown-item" href="#">Remove</a>
-                                      <a class="dropdown-item" href="#">Assign</a> --}}
+                                                                <form action="{{ route('events.destroy',$event->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="dropdown-item ">Remove</button>
+                                                                </form>
+
+
+
+                                                                <a class="dropdown-item" href="{{route('events.edit',$event->id)}}">Edit</a>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -74,6 +75,9 @@
 
                                             </tbody>
                                         </table>
+                                        @if (count($events)==0)
+                                        <h3 style="text-align: center">There is no records for the moment</h3>    
+                                        @endif
                                     </div>
                                 </div>
                             </div> <!-- customized table -->

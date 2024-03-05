@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
     protected $table ="categories";
-
+    protected $fillable = ['name'];
     public function event(){
         return $this->belongsToMany(Event::class);
     }

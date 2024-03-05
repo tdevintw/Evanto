@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReserveRequestController;
 use App\Models\Category;
+use App\Models\ReserveRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,8 +37,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/dashboard/users', [DashboardController::class, 'users'])->name('dashboard.users');
+    Route::get('/requests', [DashboardController::class, 'events'])->name('requests');
+    Route::patch('/accept/{event}', [DashboardController::class, 'accept'])->name('accept');
+    Route::patch('/reject/{event}', [DashboardController::class, 'reject'])->name('reject');
     Route::post('/dashboard/acces', [DashboardController::class, 'acces'])->name('dashboard.acces');
     Route::resource('categories', CategoryController::class);
+    Route::resource('events', EventController::class);
+    Route::resource('reserve', ReserveRequestController::class);
+
+
 });
 
 require __DIR__.'/auth.php';
