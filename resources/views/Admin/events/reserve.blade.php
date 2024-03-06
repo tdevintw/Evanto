@@ -24,39 +24,27 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Title</th>
-                                                    <th>Description</th>
-                                                    <th>Owner</th>
-                                                    <th>Category</th>
+                                                    <th>Event</th>
+                                                    <th>User Name</th>
                                                     <th>Status</th>
-                                                    <th>Image</th>
-                                                    <th>Date</th>
-                                                    <th>Loaction</th>
-                                                    <th>Reserve Method</th>
                                                     <th>Created_at</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($events as $event)
+                                                @foreach ($requests as $request)
                                                     <tr>
-                                                        <td>{{ $event->id }}</td>
-                                                        <td>{{ $event->title }}</td>
-                                                        <td>{{ $event->description }}</td>
-                                                        <td>{{ $event->user->name }}</td>
-                                                        <td>{{ $event->category->name }}</td>
-                                                        <td>{{ $event->status }}</td>
-                                                        <td><img style="width:50px" src="{{asset('storage/' .  $event->image )}}" alt=""></td>
-                                                        <td>{{ $event->date }}</td>
-                                                        <td>{{ $event->location }}</td>
-                                                        <td>{{ $event->reserve_method}}</td>
-                                                        <td>{{ $event->created_at }}</td>
+                                                        <td>{{ $request->id }}</td>
+                                                        <td>{{ $request->event->title }}</td>
+                                                        <td>{{ $request->user->name }}</td>
+                                                        <td>{{ $request->status }}</td>
+                                                        <td>{{ $request->created_at }}</td>
                                                         <td>
                                                             <button type="button" class="btn btn-success"
                                                                 data-toggle="dropdown">Actions</button>
 
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <form action="{{ route('accept',$event->id) }}"
+                                                                <form action="{{ route('reserveAccept',$request->id) }}"
                                                                   method="post" >
                                                                     @csrf
                                                                     @method('PATCH')
@@ -65,7 +53,7 @@
                                                                 </form>
                                                             
 
-                                                                <form action="{{ route('reject',$event->id) }}"
+                                                                <form action="{{ route('reserveReject',$request->id) }}"
                                                                    method="post" >
                                                                     @csrf
                                                                     @method('PATCH')
@@ -79,7 +67,7 @@
 
                                             </tbody>
                                         </table>
-                                        @if (count($events)==0)
+                                        @if (count($requests)==0)
                                         <h3 style="text-align: center">There is no records for the moment</h3>    
                                         @endif
                                     </div>

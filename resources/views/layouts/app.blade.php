@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts/layout')
 @section('content')
 
     <div class="min-h-screen bg-gray-100">

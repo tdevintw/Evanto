@@ -90,14 +90,13 @@
     </div>
 
     @if (count($events) > 0)
-
         <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             @foreach ($events as $event)
                 <div class="flex justify-center">
 
 
                     <div class="max-w-xs rounded overflow-hidden shadow-lg w-full">
-                        <a href="{{ route('home') }}">
+                        <a href="{{ route('more', $event->id) }}">
                             <div class="relative overflow-hidden cursor-pointer">
 
                                 <img title="More Information"
@@ -110,8 +109,6 @@
                                 </div>
                             </div>
                         </a>
-
-
                         <div class="px-6 py-4">
                             <div class="font-bold text-xl mb-2">{{ $event->title }}</div>
                             <p class="text-gray-700 text-base">{{ $event->description }}</p>
@@ -133,19 +130,51 @@
                             </div>
                             <div class="text-sm text-gray-600"><span class="font-medium">Date:</span> {{ $event->date }}
                             </div>
-                            <button
-                                class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserve</button>
+
+                            @if ($user && $user->reserveRequests->where('event_id', $event->id)->isNotEmpty())
+                                @php
+                                    $reserveRequest = $user->reserveRequests->where('event_id', $event->id)->first();
+                                    $status = $reserveRequest->status;
+                                @endphp
+
+                                @if ($status === 'accepted')
+                                    <button
+                                        class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserved</button>
+                                    <div style="text-align: center;padding-top:5px">
+                                        <a style="font-size: 12px;text-decoration: underline;"
+                                            href="{{ route('profile.edit') }}">Get your ticket</a>
+                                    </div>
+                                @elseif($status === 'pending')
+                                    <button type="submit"
+                                        class="w-full bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Waiting
+                                        Response...</button>
+                                @elseif($status === 'rejected')
+                                    <button type="submit"
+                                        class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Organizer Reject Your Request</button>
+                                @endif
+                            @else
+                                <form action="{{ route('reserve.store') }}" method="post">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="hidden" id="event_id" name="event_id" value="{{ $event->id }}">
+                                    <button type="submit"
+                                        class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserve</button>
+                                </form>
+                            @endif
+
+
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
     @else
-    <div class="flex flex-col items-center mt-8">
-        <h1 class="text-xl">There Is No Events For The Moments</h1>
-        <img style="width:50%" src="https://static.vecteezy.com/system/resources/previews/007/872/974/non_2x/file-not-found-illustration-with-confused-people-holding-big-magnifier-search-no-result-data-not-found-concept-can-be-used-for-website-landing-page-animation-etc-vector.jpg"
-            alt="not found">
-    </div>
-    @endif  
+        <div class="flex flex-col items-center mt-8">
+            <h1 class="text-xl">There Is No Events For The Moments</h1>
+            <img style="width:50%"
+                src="https://static.vecteezy.com/system/resources/previews/007/872/974/non_2x/file-not-found-illustration-with-confused-people-holding-big-magnifier-search-no-result-data-not-found-concept-can-be-used-for-website-landing-page-animation-etc-vector.jpg"
+                alt="not found">
+        </div>
+    @endif
     </div>
 @endsection

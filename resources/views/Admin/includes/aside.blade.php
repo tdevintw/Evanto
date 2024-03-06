@@ -77,7 +77,7 @@
                     </a>
                 </li>
                 <li class="nav-item w-100">
-                    <a class="nav-link" href="calendar.html">
+                    <a class="nav-link" href="{{route('reserve.index')}}">
                         <img style="width: 20px" src="https://cdn-icons-png.flaticon.com/256/10337/10337087.png">
                         <span class="ml-3 item-text">Reservations Requests</span>
                     </a>

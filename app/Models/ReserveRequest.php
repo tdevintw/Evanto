@@ -9,6 +9,12 @@ class ReserveRequest extends Model
 {
     use HasFactory;
     protected $table ="reserverequests";
+
+    protected $fillable = [
+        'user_id',
+        'event_id',   
+        'status'   
+    ];
     public function user(){
         return $this->belongsTo(User::class);
     }

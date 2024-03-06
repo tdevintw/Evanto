@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -21,7 +22,26 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+
+        // Retrieving $request_id from session
+        $request_id = session('request_id');
+        $request_user_id = session('request_user_id');
+        // Destroying $request_id from session
+        session()->forget('request_id');
+        session()->forget('request_user_id');
+
+
+        $user = $request_user_id;
+        Ticket::create([
+            'user_id' => $user,
+            'request_id' => $request_id
+        ]);
+        if(Auth::user()->role =='organizer'){
+            return redirect()->route('reserve.index');
+        }elseif(Auth::user()->role =='user'){
+            return redirect()->route('profile.edit');
+        }
+        
     }
 
     /**
@@ -29,7 +49,7 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        //
+
     }
 
     /**
