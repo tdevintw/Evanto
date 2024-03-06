@@ -31,9 +31,9 @@
                                         @endif
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Description</label>
-                                            <input style="width:50%" value="{{$event->description}}" name="description" type="text"
+                                            <textarea style="width:50%" value="{{$event->description}}" name="description" type="text"
                                                 class="form-control" id="exampleInputEmail1"
-                                                aria-describedby="emailHelp" placeholder="Description">
+                                                aria-describedby="emailHelp" placeholder="Description"></textarea>
                                         </div>
                                         @if ($errors->has('description'))
                                             <p class="text-danger">{{ $errors->first('description') }}</p>

@@ -50,6 +50,8 @@ class ReserveRequestController extends Controller
             ]);
             $request_id = $newRequest->id;
             session(['request_id' => $request_id]);
+            session(['request_user_id' => $id]);
+            session(['event_id' => $event_id]);
             return redirect()->route('ticket.create');
         } else {
 

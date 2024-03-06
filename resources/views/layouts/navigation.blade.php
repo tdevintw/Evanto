@@ -11,10 +11,20 @@
                 </div>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')" style="text-decoration: none">
                         {{ __('Home') }}
                     </x-nav-link>
                 </div>
+                @auth
+                @if ($user->role=='admin' || $user->role=='organizer')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')" style="text-decoration: none">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+                @endif
+                @endauth
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -43,9 +53,7 @@
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('dashboard.index')">
-                                {{ __('Dashboard') }}
-                            </x-dropdown-link>
+                           
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
@@ -106,6 +114,9 @@
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                     {{ __('home') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
+                    {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             </div>
 

@@ -111,7 +111,7 @@
                         </a>
                         <div class="px-6 py-4">
                             <div class="font-bold text-xl mb-2">{{ $event->title }}</div>
-                            <p class="text-gray-700 text-base">{{ $event->description }}</p>
+                            <p class="text-gray-700 text-base truncate w-64 overflow-hidden whitespace-nowrap">{{ $event->description }}</p>
                         </div>
                         <div class="px-6 pt-2 pb-4">
                             <div class="flex justify-between items-center mb-2">
@@ -130,8 +130,12 @@
                             </div>
                             <div class="text-sm text-gray-600"><span class="font-medium">Date:</span> {{ $event->date }}
                             </div>
-
-                            @if ($user && $user->reserveRequests->where('event_id', $event->id)->isNotEmpty())
+                            
+                            @if($user && $user->acces=='banned')
+                            <button
+                            class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mt-4 rounded-full">You Are Banned</button>
+                            @elseif ($user && $user->reserveRequests->where('event_id', $event->id)->isNotEmpty())
+                            
                                 @php
                                     $reserveRequest = $user->reserveRequests->where('event_id', $event->id)->first();
                                     $status = $reserveRequest->status;
@@ -150,8 +154,9 @@
                                         Response...</button>
                                 @elseif($status === 'rejected')
                                     <button type="submit"
-                                        class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Organizer Reject Your Request</button>
+                                        class="w-full bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Organizer Reject Your Request</button>
                                 @endif
+                            
                             @else
                                 <form action="{{ route('reserve.store') }}" method="post">
                                     @csrf
@@ -161,7 +166,7 @@
                                         class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserve</button>
                                 </form>
                             @endif
-
+                                
 
                         </div>
                     </div>

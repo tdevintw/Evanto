@@ -57,7 +57,7 @@ class EventController extends Controller
         Event::create([
             'organizer_id' => $request->organize_id,
             'title' => $request->title,
-            'description' => $request->title,
+            'description' => $request->description,
             'date' => $formattedDateTime,
             'location' => $request->location,
             'image' => $fileName,

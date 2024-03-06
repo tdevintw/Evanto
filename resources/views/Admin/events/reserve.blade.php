@@ -40,6 +40,10 @@
                                                         <td>{{ $request->status }}</td>
                                                         <td>{{ $request->created_at }}</td>
                                                         <td>
+                                                            @if ($request->user->acces =='banned')
+                                                            <button type="button" class="btn btn-danger"
+                                                            data-toggle="dropdown">User Banned </button>
+                                                            @else
                                                             <button type="button" class="btn btn-success"
                                                                 data-toggle="dropdown">Actions</button>
 
@@ -61,6 +65,7 @@
                                                                         class="dropdown-item ">Reject</button>
                                                                 </form>
                                                             </div>
+                                                            @endif
                                                         </td>
                                                     </tr>
                                                 @endforeach

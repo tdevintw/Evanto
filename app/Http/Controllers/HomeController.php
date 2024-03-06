@@ -17,10 +17,9 @@ class HomeController extends Controller
         $user = Auth::user();
         $user->role = 'organizer';
         $user->save();
-        return view('Admin.dashboard');
+        return redirect()->route('dashboard.index');
     }
     public function more(Event $event){
         return view('onepage',compact('event'));
     }
-
 }

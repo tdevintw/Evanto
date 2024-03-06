@@ -6,6 +6,7 @@ use App\Http\Requests\StoreDashboardRequest;
 use App\Http\Requests\UpdateDashboardRequest;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\ReserveRequest;
 use App\Models\Ticket;
 use App\Models\User;
 // use Illuminate\Http\Client\Request;
@@ -22,10 +23,31 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $users = User::all();
-        $tickets = Ticket::all();
-        $categories = Category::all();
-        $events = Event::all();
-        return view('Admin.dashboard',compact('user','users','tickets','categories','events'));
+        $tickets = count(Ticket::all());
+        $categories = count(Category::all());
+        $events = count(Event::all());
+        $bans = count($users->where('acces','banned'));
+        $users = count($users);
+        $public = count(Event::where('reserve_method','default')->get());
+        $private = count(Event::where('reserve_method','request')->get());
+        $accept = count(ReserveRequest::where('status','accepted')->get());
+        $reject = count(ReserveRequest::where('status','rejected')->get());
+        $rate = (($accept) /($accept+$reject)) * 100 ;
+        $rate = number_format($rate, 1);
+        // rate launch
+
+        $accept = count(Event::where('status','accepted')->get());
+        $reject = count(Event::where('status','rejected')->get());
+        $ratee = (($accept) /($accept+$reject)) * 100 ;
+        $rateE = number_format($ratee, 1);
+
+
+        //orgnaizer info
+
+        $eventsUser = count(Event::where('organizer_id',$user->id)->get());
+        
+
+        return view('Admin.dashboard',compact('user','users','tickets','categories','events','bans','public','private','rate','rateE'));
 
     }
     public function users()
