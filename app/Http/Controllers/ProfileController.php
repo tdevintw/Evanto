@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Category;
 use App\Models\Event;
 use App\Models\ReserveRequest;
 use App\Models\Ticket;
@@ -23,7 +24,8 @@ class ProfileController extends Controller
         $user = Auth::user();
         $tickets = Ticket::get()->where('user_id',$user->id);
         $requests = ReserveRequest::get()->where('user_id',$user->id);
-        return view('profile.edit', compact('user', 'tickets','requests'));
+        $categories = Category::get();
+        return view('profile.edit', compact('user', 'tickets','requests','categories'));
     }
 
     /**

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-  
+
 class EventController extends Controller
 {
     /**
@@ -21,8 +21,8 @@ class EventController extends Controller
     {
 
         $user = Auth::user();
-        $events = Event::all()->where('organizer_id',$user->id);
-        return view('Admin.events.index',compact('events','user'));
+        $events = Event::all()->where('organizer_id', $user->id);
+        return view('Admin.events.index', compact('events', 'user'));
     }
 
     /**
@@ -30,10 +30,10 @@ class EventController extends Controller
      */
     public function create()
     {
+
         $user = Auth::user();
         $categories = Category::get();
-        return view('Admin.events.create',compact('user','categories'));
-
+        return view('Admin.events.create', compact('user', 'categories'));
     }
 
     /**
@@ -41,19 +41,18 @@ class EventController extends Controller
      */
     public function store(StoreEventRequest $request)
     {
-        if($request->has('image')){
-            $file = $request->file('image');
-            // $extension = $file->getClientOriginalExtension();
-            // $filename = time().'.'. $extension ;
-            // $file->move('images/events/',$filename);
-            $fileName ='images/events/' .  time().'.'.$file->extension();  
-            $file->move(public_path('storage/images/events'), $fileName);
 
+        Carbon::createFromTimestamp($request->date);
+        if ($request->has('image')) {
+            $file = $request->file('image');
+            $fileName = 'images/events/' .  time() . '.' . $file->extension();
+            $file->move(public_path('storage/images/events'), $fileName);
         }
         // $user = Auth::user();
         // $id = $user->id ;
 
         $formattedDateTime = Carbon::parse($request->date)->toDateTimeString();
+
         Event::create([
             'organizer_id' => $request->organize_id,
             'title' => $request->title,
@@ -68,7 +67,6 @@ class EventController extends Controller
         ]);
 
         return redirect()->route('events.index');
-
     }
 
     /**
@@ -87,7 +85,7 @@ class EventController extends Controller
         $user = Auth::user();
         $categories = Category::get();
 
-        return view('Admin.events.update',compact('user','categories','event'));
+        return view('Admin.events.update', compact('user', 'categories', 'event'));
     }
 
     /**
@@ -96,16 +94,16 @@ class EventController extends Controller
     public function update(UpdateEventRequest $request, Event $event)
     {
 
- 
-            $file = $request->file('image');
-            $fileName = 'images/events/' . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('storage/images/events'), $fileName);
+
+        $file = $request->file('image');
+        $fileName = 'images/events/' . time() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('storage/images/events'), $fileName);
 
 
 
         // Update the event with validated data
         $event->update($request->validated());
-        
+
         $event->image = $fileName;
         $event->save();
         return redirect()->route('events.index');
@@ -116,11 +114,9 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
- 
 
-            $event->delete();
-            return redirect()->route('events.index');
- 
+
+        $event->delete();
+        return redirect()->route('events.index');
     }
-
 }

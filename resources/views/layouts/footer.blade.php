@@ -7,7 +7,7 @@
                 <a class="flex items-center justify-center font-medium text-gray-900 title-font md:justify-start">
                     <img src="{{ asset('storage/images/logo.png') }}" alt="dd" class="block h-auto w-40">
                 </a>
-                <p class="mt-2 text-sm text-gray-500">Design, Code and Ship!</p>
+                <p class="mt-2 text-sm text-gray-500">Find and Reserve Tickets for Your Favorite Events!</p>
                 <div class="mt-4">
                     <span class="inline-flex justify-center mt-2 sm:ml-auto sm:mt-0 sm:justify-start">
                         <a class="text-gray-500 cursor-pointer hover:text-gray-700">

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\EventRuleRequest;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,6 +24,14 @@ class StoreEventRequest extends FormRequest
      */
     public function rules(): array
     {
+        $dateTime = Carbon::createFromTimestamp(time());
+
+        $dateTime->addHour(1);
+        $dateTime->addMinutes(10);
+        
+        $dateTimeY = Carbon::createFromTimestamp(time());
+        $dateTimeY->addYear(1);
+
         return [
             'title' => ['required', new EventRuleRequest,],
             'description' => ['required', new EventRuleRequest],
@@ -30,8 +39,10 @@ class StoreEventRequest extends FormRequest
             'image' => 'required','image|mimes:jpeg,png,jpg,svg|max:2048',
             'location' => ['required', new EventRuleRequest],
             'date' => ['required'],
+            'date' => 'after:' .  $dateTime,
+            'date' => 'before:' .  $dateTimeY,
             'reserve_method' => ['required','in:default,request'],
-            'tickets' => ['required'],
+            'tickets' => ['required', 'integer', 'max:100000'],
 
             
         ];
@@ -47,7 +58,9 @@ class StoreEventRequest extends FormRequest
             'image.required' => 'image is required',
             'location.required' => 'location is required',
             'date.required' => 'date is required',
-            'reserve_method.required' => 'reserve method is required'
+            'reserve_method.required' => 'reserve method is required',
+            'date.after' => 'Date must be at least 10 min from now',
+            'date.before' => 'Max date is 1 year from now'
     
         ];
     }

@@ -28,6 +28,7 @@
                                                     <th>Description</th>
                                                     <th>Owner</th>
                                                     <th>Category</th>
+                                                    <th>Left Tickets</th>
                                                     <th>Status</th>
                                                     <th>Image</th>
                                                     <th>Date</th>
@@ -45,6 +46,7 @@
                                                         <td>{{ $event->description }}</td>
                                                         <td>{{ $event->user->name }}</td>
                                                         <td>{{ $event->category->name }}</td>
+                                                        <td>{{ $event->tickets }}</td>
                                                         <td>{{ $event->status }}</td>
                                                         <td><img style="width:50px" src="{{asset('storage/' .  $event->image )}}" alt=""></td>
                                                         <td>{{ $event->date }}</td>
