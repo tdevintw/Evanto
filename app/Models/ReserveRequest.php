@@ -22,6 +22,6 @@ class ReserveRequest extends Model
         return $this->belongsTo(Event::class);
     }
     public function ticket(){
-        return $this->hasOne(Ticket::class);
+        return $this->hasOne(Ticket::class,'request_id', 'id');
     }
 }

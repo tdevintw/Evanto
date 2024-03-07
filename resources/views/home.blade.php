@@ -141,7 +141,9 @@
                                         class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserved</button>
                                     <div style="text-align: center;padding-top:5px">
                                         <a style="font-size: 12px;text-decoration: underline;"
-                                            href="{{ route('profile.edit') }}">Get your ticket</a>
+                                        href="{{ asset('storage/' . $reserveRequest->ticket->pdf) }}" class="btn btn-success" download  >download your ticket</a>
+
+
                                     </div>
                                 @elseif($status === 'pending')
                                     <button type="submit"

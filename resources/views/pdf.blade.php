@@ -51,7 +51,6 @@
         font-family: 'Courier New', Courier, monospace;
         color: black;
         font-size: 5mm;
-
       }
 
     </style>
@@ -75,9 +74,9 @@
           <div>
             <h5 style="margin-top: 6mm;" class="infos">Name: {{$ticket->user->name}}</h5>
             <h5 class="infos">ID: {{$ticket->id}}</h5>
-            <h5 class="infos">Location: {{$ticket->event->location}}</h5>
-            <h5 class="infos">Date: </h5>
-            <h5 class="infos">Reserved In: LONSOMARTY</h5>
+            <h5 class="infos">Location: {{$ticket->request->event->location}}</h5>
+            <h5 class="infos">Date: {{$ticket->request->event->date}}</h5>
+            <h5 class="infos">Reserved In: {{$ticket->created_at}}</h5>
           </div>
         </div>
       </div>
