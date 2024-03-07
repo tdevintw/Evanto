@@ -20,8 +20,8 @@
                     <td>{{ $ticket->request->event->title }}</td>
                     <td>{{ $ticket->created_at }}</td>
                     <td>
-                        <button type="button" class="btn btn-success"
-                           >Get Ticket</button>
+                        <a href="{{ asset('storage/' . $ticket->pdf) }}" class="btn btn-success" download>Download Ticket</a>
+
                     </td>
                 </tr>
             @endforeach
