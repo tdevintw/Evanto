@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
 
 use App\Models\Ticket;
 use App\Http\Requests\StoreTicketRequest;
@@ -59,64 +60,29 @@ class TicketController extends Controller
         $ticket->save();
 
 
-        if(Auth::user()->role =='organizer'){
-            return redirect()->route('reserve.index');
-        }elseif(Auth::user()->role =='user'){
+        
             return redirect()->route('profile.edit');
-        }
+
     
     }
     private function generatePdf($ticket)
 {
     $event = $ticket->request->event;
 
-    $html = '
-    <style>
-        .ticket {
-            width: 400px;
-            padding: 20px;
-            border: 2px solid #333;
-            border-radius: 10px;
-            margin: auto;
-        }
-        .event-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .ticket-owner {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        .ticket-details {
-            margin-bottom: 10px;
-        }
-        .ticket-details p {
-            margin: 5px 0;
-        }
-        .ticket-image {
-            width: 100%;
-            max-height: 200px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-    </style>
-    <div class="ticket">
-        <div class="event-title">' . $event->title . '</div>
-        <img src="' . $event->image . '" class="ticket-image" alt="Event Image">
-        <div class="ticket-owner">Ticket Owner: ' . $ticket->user->name . '</div>
-        <div class="ticket-details">
-            <p>Date: ' . $event->date . '</p>
-            <p>Location: ' . $event->location . '</p>
-        </div>
-    </div>';
-
     
+
+    // instantiate and use the dompdf class
     $dompdf = new Dompdf();
+    
+    $html = View::make('pdf',['ticket' => $ticket])->render();
+
     $dompdf->loadHtml($html);
+
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
     return $dompdf->output();
+
+
 }
 
     /**
