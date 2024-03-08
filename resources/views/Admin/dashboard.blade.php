@@ -169,7 +169,7 @@
                                                             <div class="col">
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">
                                                                     Rate %</h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$rate}} %</span>
+                                                                <span class="h2 font-weight-bold mb-0">{{$rate}}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <img style="width: 50px" src="https://cdn-icons-png.flaticon.com/256/190/190411.png" alt="">

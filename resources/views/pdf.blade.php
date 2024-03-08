@@ -29,19 +29,20 @@
         background-color: black;
         text-align: center;
         border-radius: 10px 0 0 10px;
+        border-right: solid 1px white;
 
       }
       .content {
         float: left;
         width: 80mm;
         height: 60mm;
-        background-color: white;
+        background-color: black;
         text-align: center;
         border-radius: 0 10px 10px 0;
 
       }
       .infos {
-        color: black;
+        color: white;
         margin-top: 0.5mm;
         margin-bottom: 1mm;
         font-size: 2.5mm;
@@ -49,8 +50,14 @@
       }
       .title{
         font-family: 'Courier New', Courier, monospace;
-        color: black;
-        font-size: 5mm;
+        color: white;
+        font-size: 10mm;
+      }
+      .event_image
+      {
+        width: 80mm;
+        height:60mm;
+        border-radius: 10px 0 0 10px;
       }
 
     </style>
@@ -59,21 +66,23 @@
     <div>
       <div class='ticket'>
         <div class="imagee">
-          <div style="margin-top: 26mm;">
-            <span class="header" style="width:80mm;font-size:8mm;color:white">Evanto</span>
-          </div>
+           <img class="event_image" src="https://wallpapercave.com/wp/wp2349395.jpg" alt=""> 
         </div>
         <div class="content">
-          <div style='margin-top: 15mm;'>
+          <div style='margin-top: 8mm;'>
             <div class="event-details">
               <div class="event-title">
+                <div style="width: 80mm;align-text:center">
+                   <img style="width:40mm;" src="https://i.ibb.co/Npc7dgx/Evanto.png" alt=""> 
+                </div>
+
                 <span class="title">{{ $ticket->request->event->title }}</span>
               </div>
             </div>
           </div>
           <div>
-            <h5 style="margin-top: 6mm;" class="infos">Name: {{$ticket->user->name}}</h5>
-            <h5 class="infos">ID: {{$ticket->id}}</h5>
+            <h5 style="margin-top: 3mm;" class="infos">Name: {{$ticket->user->name}}</h5>
+            <h5 class="infos">UID: {{$ticket->id}}</h5>
             <h5 class="infos">Location: {{$ticket->request->event->location}}</h5>
             <h5 class="infos">Date: {{$ticket->request->event->date}}</h5>
             <h5 class="infos">Reserved In: {{$ticket->created_at}}</h5>

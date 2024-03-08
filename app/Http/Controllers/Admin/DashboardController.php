@@ -32,15 +32,30 @@ class DashboardController extends Controller
         $private = count(Event::where('reserve_method','request')->get());
         $accept = count(ReserveRequest::where('status','accepted')->get());
         $reject = count(ReserveRequest::where('status','rejected')->get());
-        $rate = (($accept) /($accept+$reject)) * 100 ;
-        $rate = number_format($rate, 1);
+        if($accept+$reject != 0){
+            $rate = (($accept) /($accept+$reject)) * 100 ;
+            $rate = number_format($rate, 1) . "%";
+        }else {
+
+            $rate = "No record";
+        }
+      
         // rate launch
+
+        
 
         $accept = count(Event::where('status','accepted')->get());
         $reject = count(Event::where('status','rejected')->get());
-        $ratee = (($accept) /($accept+$reject)) * 100 ;
-        $rateE = number_format($ratee, 1);
 
+        if($accept+$reject != 0){
+            $rateE = (($accept) /($accept+$reject)) * 100 ;
+            $rateE = number_format($rateE, 1) . "%";
+        }else {
+
+            $rateE = "No record";
+        }
+
+      
 
         //orgnaizer info
 

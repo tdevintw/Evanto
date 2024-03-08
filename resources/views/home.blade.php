@@ -126,11 +126,11 @@
                                 {{ $event->date }}
                             </div>
 
-                            @if ($user && $user->acces == 'banned')
+                            @if($user && $user->acces == 'banned' && $user->role != 'admin')
                                 <p
                                     class="w-full  text-red-500 font-bold py-2 px-4 mt-4">You
                                     Are Banned from reserving </p>
-                            @elseif ($user && $user->reserveRequests->where('event_id', $event->id)->isNotEmpty())
+                            @elseif ($user && $user->role != 'admin' && $user->reserveRequests->where('event_id', $event->id)->isNotEmpty())
                                 @php
                                     $reserveRequest = $user->reserveRequests->where('event_id', $event->id)->first();
                                     $status = $reserveRequest->status;
@@ -154,7 +154,7 @@
                                         class="w-full bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Organizer
                                         Reject Your Request</button>
                                 @endif
-                            @else
+                            @elseif($user->role != 'admin')
                                 <form action="{{ route('reserve.store') }}" method="post">
                                     @csrf
                                     @method('POST')

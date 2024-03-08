@@ -4,14 +4,10 @@
 <head>
     <!-- Required meta tags -->
     <title>Evanto</title>
-    <link rel="icon" type="image/x-icon"
-        href="{{ asset('storage/images/ticket.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/images/ticket.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-
-
-    <title>Tailwind CSS CDN</title>
 </head>
 
 <body>
@@ -46,13 +42,16 @@
                 </div>
                 <div class="text-sm text-gray-600"><span class="font-medium">Date:</span> {{ $event->date }}
                 </div>
-                <form action="{{ route('reserve.store') }}" method="post">
+                @if ($user->role != 'admin')
+                    <form action="{{ route('reserve.store') }}" method="post">
                     @csrf
                     @method('POST')
                     <input type="hidden" id="event_id" name="event_id" value="{{ $event->id }}">
                     <button type="submit"
                         class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserve</button>
-                </form>
+                </form>  
+                @endif
+
             </div>
         </div>
     </div>

@@ -13,9 +13,17 @@ class HomeController extends Controller
 
     public function index(){
         $dateTime = Carbon::createFromTimestamp(time());
-        $events = Event::get()->where('status','accepted')->where('date','>',$dateTime);
+        $events = Event::where('status','accepted')->where('date','>',$dateTime)->where('tickets','>',0)->get();
         $user = Auth::user();
         $categories = Category::get();
+        // $arr = [];
+        // foreach($categories as $cat){
+        //     $arr["reserved"] = grgerre
+        //     $arr["name"] = $cat-
+
+        // }
+        // $arr;
+
         return view('home',compact('events','user','categories'));
     }
     public function role(){
@@ -25,7 +33,8 @@ class HomeController extends Controller
         return redirect()->route('dashboard.index');
     }
     public function more(Event $event){
-        return view('onepage',compact('event'));
+        $user = Auth::user();
+        return view('onepage',compact('event','user'));
     }
 
     public function search(Request $request) {
@@ -35,6 +44,7 @@ class HomeController extends Controller
         $events = Event::where('status', 'accepted')
                        ->where('title', 'like', '%' . $search . '%')
                        ->where('date','>',$dateTime)
+                       ->where('tickets','>',0)
                        ->get();
         
         $user = Auth::user();
@@ -49,6 +59,7 @@ class HomeController extends Controller
         $events = Event::where('status', 'accepted')
                        ->where('category_id', 'like', '%' . $id . '%')
                        ->where('date','>',$dateTime)
+                       ->where('tickets','>',0)
                        ->get();
         
         $user = Auth::user();
