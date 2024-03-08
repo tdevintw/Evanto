@@ -13,7 +13,7 @@ class HomeController extends Controller
 
     public function index(){
         $dateTime = Carbon::createFromTimestamp(time());
-        $events = Event::where('status','accepted')->where('date','>',$dateTime)->where('tickets','>',0)->get();
+        $events = Event::where('status','accepted')->where('date','>',$dateTime)->where('tickets','>',0)->paginate(5);
         $user = Auth::user();
         $categories = Category::get();
         // $arr = [];
@@ -49,7 +49,7 @@ class HomeController extends Controller
         
         $user = Auth::user();
         $categories = Category::get();
-        return view('home',compact('events','user','categories'));
+        return view('discover',compact('events','user','categories'));
         
     }
 
@@ -64,8 +64,19 @@ class HomeController extends Controller
         
         $user = Auth::user();
         $categories = Category::get();
-        return view('home',compact('events','user','categories'));
+        return view('discover',compact('events','user','categories'));
         
+    }
+    public function discover(){
+        $dateTime = Carbon::createFromTimestamp(time());
+        $events = Event::where('status', 'accepted')
+                       ->where('date','>',$dateTime)
+                       ->where('tickets','>',0)
+                       ->get();
+        
+        $user = Auth::user();
+        $categories = Category::get();
+        return view('discover',compact('events','user','categories'));
     }
     
     

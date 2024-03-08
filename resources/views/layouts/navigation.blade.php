@@ -24,6 +24,12 @@
                         </div>
                     @endif
                 @endauth
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('discover')" :active="request()->routeIs('discover')" style="text-decoration: none">
+                        {{ __('Discover') }}
+                    </x-nav-link>
+                </div>
+                
                 @isset($categories)
                     <div style="margin-top:18px;cursor:pointer;" class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-dropdown align="bottom" width="48" class="relative">

@@ -29,7 +29,7 @@
         background-color: black;
         text-align: center;
         border-radius: 10px 0 0 10px;
-        border-right: solid 1px white;
+        border-right: solid 1px black;
 
       }
       .content {

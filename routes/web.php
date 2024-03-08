@@ -16,6 +16,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('onepage/{event}', [HomeController::class, 'more'])->name('more');
 Route::get('/search', [HomeController::class, 'search'])->name('events.search');
 Route::get('/category/{id}', [HomeController::class, 'category'])->name('events.category');
+Route::get('/discover', [HomeController::class, 'discover'])->name('discover');
 
 
 // });
