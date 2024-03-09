@@ -17,6 +17,7 @@ Route::get('onepage/{event}', [HomeController::class, 'more'])->name('more');
 Route::get('/search', [HomeController::class, 'search'])->name('events.search');
 Route::get('/category/{id}', [HomeController::class, 'category'])->name('events.category');
 Route::get('/discover', [HomeController::class, 'discover'])->name('discover');
+Route::get('/date', [HomeController::class, 'date'])->name('date');
 Route::get('/google/redirect', [App\Http\Controllers\GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/google/callback', [App\Http\Controllers\GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
