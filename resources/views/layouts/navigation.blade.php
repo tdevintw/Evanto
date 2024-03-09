@@ -29,7 +29,7 @@
                         {{ __('Discover') }}
                     </x-nav-link>
                 </div>
-                
+
                 @isset($categories)
                     <div style="margin-top:18px;cursor:pointer;" class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-dropdown align="bottom" width="48" class="relative">
@@ -150,38 +150,42 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
                 @isset($categories)
-                    <x-dropdown align="bottom" width="48">
-                        <x-slot name="trigger">
-                            <button style="display:flex;"
-                                class="text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">
-                                Categories
-                                <svg class="ml-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M9.293 14.293a1 1 0 001.414 0l5-5a1 1 0 00-1.414-1.414L10 11.586l-4.293-4.293a1 1 0 10-1.414 1.414l5 5z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </x-slot>
+                    <div style="margin-left: 15px">
+
+
+                        <x-dropdown align="bottom" width="48">
+                            <x-slot name="trigger">
+                                <button style="display:flex;"
+                                    class="text-sm font-medium text-gray-500 hover:text-gray-700 focus:outline-none">
+                                    Categories
+                                    <svg class="ml-1 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M9.293 14.293a1 1 0 001.414 0l5-5a1 1 0 00-1.414-1.414L10 11.586l-4.293-4.293a1 1 0 10-1.414 1.414l5 5z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </x-slot>
 
 
 
-                        <x-slot name="content">
-                            <div">
-                                @foreach ($categories as $category)
-                                    <x-dropdown-link :href="route('events.category', $category->id)">
-                                        {{ $category->name }}
-                                    </x-dropdown-link>
-                                @endforeach
+                            <x-slot name="content">
+                                <div">
+                                    @foreach ($categories as $category)
+                                        <x-dropdown-link :href="route('events.category', $category->id)">
+                                            {{ $category->name }}
+                                        </x-dropdown-link>
+                                    @endforeach
 
-                        </x-slot>
-
-
+                            </x-slot>
 
 
 
 
-                    </x-dropdown>
+
+
+                        </x-dropdown>
+                    </div>
                 @endisset
             </div>
 

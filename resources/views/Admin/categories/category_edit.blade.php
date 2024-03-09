@@ -9,6 +9,7 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-12">
+                        @include('Admin/includes/nav')
                         <div class="row">
                             <!-- Small table -->
                             <div class="col-md-12 my-4">
@@ -244,6 +245,17 @@
             });
         }
     </script>
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            var sidebar = document.getElementById('leftSidebar');
+            if (sidebar.style.width === '60%') {
+                sidebar.style.width = '0';
+            } else {
+                sidebar.style.width = '60%';
+            }
+        });
+    </script>
+    
     <script src="js/apps.js"></script>
 </body>
 

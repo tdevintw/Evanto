@@ -290,6 +290,17 @@
             });
         }
     </script>
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            var sidebar = document.getElementById('leftSidebar');
+            if (sidebar.style.width === '60%') {
+                sidebar.style.width = '0';
+            } else {
+                sidebar.style.width = '60%';
+            }
+        });
+    </script>
+    
     <script src="js/apps.js"></script>
 </body>
 

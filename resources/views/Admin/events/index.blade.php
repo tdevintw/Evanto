@@ -9,13 +9,15 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-12">
+                        @include('Admin/includes/nav')
                         <div class="row">
                             <!-- Small table -->
                             <div class="col-md-12 my-4">
                                 <h2 class="h4 mb-1">events Management</h2>
                                 <p class="mb-3">here you can manage the platform's events</p>
                                 <div style="margin-bottom: 10px">
-                                    <a href="{{route('events.create')}}"><button type="button" class="btn btn-success">New Event</button></a>
+                                    <a href="{{ route('events.create') }}"><button type="button"
+                                            class="btn btn-success">New Event</button></a>
                                 </div>
                                 <div class="card shadow">
                                     <div class="card-body">
@@ -48,10 +50,12 @@
                                                         <td>{{ $event->category->name }}</td>
                                                         <td>{{ $event->tickets }}</td>
                                                         <td>{{ $event->status }}</td>
-                                                        <td><img style="width:50px" src="{{asset('storage/' .  $event->image )}}" alt=""></td>
+                                                        <td><img style="width:50px"
+                                                                src="{{ asset('storage/' . $event->image) }}"
+                                                                alt=""></td>
                                                         <td>{{ $event->date }}</td>
                                                         <td>{{ $event->location }}</td>
-                                                        <td>{{ $event->reserve_method}}</td>
+                                                        <td>{{ $event->reserve_method }}</td>
                                                         <td>{{ $event->created_at }}</td>
                                                         <td>
                                                             <button type="button" class="btn btn-success"
@@ -59,7 +63,7 @@
 
                                                             <div class="dropdown-menu dropdown-menu-right">
 
-                                                                <form action="{{ route('events.destroy',$event->id) }}"
+                                                                <form action="{{ route('events.destroy', $event->id) }}"
                                                                     method="post">
                                                                     @csrf
                                                                     @method('DELETE')
@@ -69,7 +73,8 @@
 
 
 
-                                                                <a class="dropdown-item" href="{{route('events.edit',$event->id)}}">Edit</a>
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('events.edit', $event->id) }}">Edit</a>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -77,8 +82,8 @@
 
                                             </tbody>
                                         </table>
-                                        @if (count($events)==0)
-                                        <h3 style="text-align: center">There is no records for the moment</h3>    
+                                        @if (count($events) == 0)
+                                            <h3 style="text-align: center">There is no records for the moment</h3>
                                         @endif
                                     </div>
                                 </div>
@@ -293,6 +298,17 @@
             });
         }
     </script>
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            var sidebar = document.getElementById('leftSidebar');
+            if (sidebar.style.width === '60%') {
+                sidebar.style.width = '0';
+            } else {
+                sidebar.style.width = '60%';
+            }
+        });
+    </script>
+
     <script src="js/apps.js"></script>
 </body>
 

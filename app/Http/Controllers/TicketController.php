@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\View;
 use App\Models\Ticket;
 use App\Http\Requests\StoreTicketRequest;
 use App\Http\Requests\UpdateTicketRequest;
+use App\Mail\TicketPdfEmail;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class TicketController extends Controller
 {
@@ -38,8 +41,8 @@ class TicketController extends Controller
         session()->forget('event_id');
 
         $user = $request_user_id;
- 
-       $ticket =  Ticket::create([
+        $userEntity = User::find($user);
+        $ticket =  Ticket::create([
             'user_id' => $user,
             'request_id' => $request_id
         ]);
@@ -60,12 +63,28 @@ class TicketController extends Controller
         // Update ticket record with PDF path
         $ticket->pdf = $pdfPath;
         $ticket->save();
-
-
         
-            return redirect()->route('profile.edit');
 
-    
+        $data["email"] = $userEntity->email;
+        $data["title"] = "From Evanto.com";
+        $data["body"] = "content";
+  
+        $pdf = $pdfContent;
+  
+        Mail::send('content', $data, function($message)use($data, $pdf) {
+            $message->to($data["email"], $data["email"])
+                    ->subject($data["title"])
+                    ->attachData($pdf, "ticket.pdf");
+        });
+  
+
+
+
+            if($userEntity->role =='user'){
+                return redirect()->route('profile.edit');
+            }elseif($userEntity->role =='organizer'){
+                return redirect()->route('reserve.index');
+            }
     }
     private function generatePdf($ticket)
 {
