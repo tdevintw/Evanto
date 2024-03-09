@@ -23,15 +23,16 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $users = User::all();
-        $tickets = count(Ticket::all());
-        $categories = count(Category::all());
-        $events = count(Event::all());
-        $bans = count($users->where('acces','banned'));
-        $users = count($users);
-        $public = count(Event::where('reserve_method','default')->get());
-        $private = count(Event::where('reserve_method','request')->get());
-        $accept = count(ReserveRequest::where('status','accepted')->get());
-        $reject = count(ReserveRequest::where('status','rejected')->get());
+        $tickets = Ticket::count();
+        $categories = Category::count();
+        $events = Event::count();
+        $bans = $users->where('acces','banned')->count();
+        $users = $users->count();
+        $public =Event::where('reserve_method','default')->count();
+        $private = Event::where('reserve_method','request')->count();
+
+        $accept = ReserveRequest::where('status','accepted')->count();
+        $reject = ReserveRequest::where('status','rejected')->count();
         if($accept+$reject != 0){
             $rate = (($accept) /($accept+$reject)) * 100 ;
             $rate = number_format($rate, 1) . "%";
@@ -44,8 +45,8 @@ class DashboardController extends Controller
 
         
 
-        $accept = count(Event::where('status','accepted')->get());
-        $reject = count(Event::where('status','rejected')->get());
+        $accept = Event::where('status','accepted')->count();
+        $reject = Event::where('status','rejected')->count();
 
         if($accept+$reject != 0){
             $rateE = (($accept) /($accept+$reject)) * 100 ;
@@ -59,10 +60,57 @@ class DashboardController extends Controller
 
         //orgnaizer info
 
-        $eventsUser = count(Event::where('organizer_id',$user->id)->get());
+        $eventsUser = Event::where('organizer_id',$user->id)->count();
+        $eventsRequests = ReserveRequest::wherehas('event', function($query){
+            $query->where('organizer_id',Auth::user()->id);
+        })->count();
+
+        $uniqueUsers = ReserveRequest::where('status','accepted')->wherehas('event', function ($query){
+            $query->where('organizer_id','=',Auth::user()->id);
+        })->distinct('user_id')->count();
+        
+        $unqiueTickets = ReserveRequest::where('status','accepted')->wherehas('event', function ($query){
+            $query->where('organizer_id','=',Auth::user()->id);
+        })->count();
+        
+        $publicUnique = Event::where('organizer_id',$user->id)->where('reserve_method','default')->count();
+        $privateUnique = Event::where('organizer_id',$user->id)->where('reserve_method','request')->count();
+
+        //accept rate organizer 
+
+        $accept = ReserveRequest::where('status','accepted')->whereHas('event', function ($query){
+            $query->where('organizer_id',Auth::user()->id);
+        })->count();
+        $reject = ReserveRequest::where('status','rejected')->whereHas('event', function ($query){
+            $query->where('organizer_id',Auth::user()->id);
+        })->count();
+        if($accept+$reject != 0){
+            $rateU = (($accept) /($accept+$reject)) * 100 ;
+            $rateU = number_format($rateU, 1) . "%";
+        }else {
+
+            $rateU = "No record";
+        }
+      
+        // rate launch
+
         
 
-        return view('Admin.dashboard',compact('user','users','tickets','categories','events','bans','public','private','rate','rateE'));
+        $accept = Event::where('status','accepted')->where('organizer_id',Auth::user()->id)->count();
+
+        $reject =Event::where('status','rejected')->where('organizer_id',Auth::user()->id)->count();
+
+        if($accept+$reject != 0){
+            $rateEU = (($accept) /($accept+$reject)) * 100 ;
+            $rateEU = number_format($rateEU, 1) . "%";
+        }else {
+
+            $rateEU = "No record";
+        }
+
+
+
+        return view('Admin.dashboard',compact('user','users','tickets','categories','events','bans','public','private','rate','rateE','eventsUser','eventsRequests','uniqueUsers','unqiueTickets','privateUnique','publicUnique','rateU','rateEU'));
 
     }
     public function users()

@@ -103,8 +103,12 @@ class ReserveRequestController extends Controller
         $reserve->save();
         $request_id = $reserve->id;
         $request_user_id = $reserve->user_id;
+        $event_id =  $reserve->event->id;
+   
         session(['request_id' => $request_id]);
         session(['request_user_id' => $request_user_id]);
+        session(['event_id' => $event_id]);
+
         return redirect()->route('ticket.create');
     }
     public function reject(ReserveRequest $reserve){

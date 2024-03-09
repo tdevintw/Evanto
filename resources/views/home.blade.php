@@ -187,9 +187,9 @@
         </div>
     @endif
     <div class="flex justify-center gap-2 mb-5">
-       {{ $events->links() }}   
+        {{ $events->links() }}
     </div>
-   
+
     </div>
 
 @endsection

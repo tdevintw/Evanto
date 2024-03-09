@@ -205,6 +205,7 @@
                                         </div>
 
                                     </div>   
+                                    {{-- Organizer Stats --}}
                                     @else
                                     <div class="header-body">
                                         <div class="row">
@@ -215,7 +216,7 @@
                                                             <div class="col">
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">
                                                                     Users</h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$users}}</span>
+                                                                <span class="h2 font-weight-bold mb-0">{{$uniqueUsers}}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <img style="width: 50px" src="https://cdn-icons-png.flaticon.com/256/476/476863.png" alt="">
@@ -236,7 +237,7 @@
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">
                                                                    
                                                                     Events </h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$events}}</span>
+                                                                <span class="h2 font-weight-bold mb-0">{{$eventsUser}}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <img style="width: 50px" src="https://cdn-icons-png.flaticon.com/256/2558/2558944.png" alt="">
@@ -257,7 +258,7 @@
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">
                                                                     Buyed Tickets
                                                                 </h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$tickets}}</span>
+                                                                <span class="h2 font-weight-bold mb-0">{{$unqiueTickets}}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <img style="width: 50px" src="https://cdn-icons-png.flaticon.com/256/470/470835.png" alt="">
@@ -277,7 +278,7 @@
                                                             <div class="col">
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">
                                                                     Request</h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$categories}}</span>
+                                                                <span class="h2 font-weight-bold mb-0">{{$eventsRequests}}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <img style="width: 50px" src="https://cdn-icons-png.flaticon.com/256/718/718970.png" alt="">
@@ -297,7 +298,7 @@
                                                             <div class="col">
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">
                                                                     Public</h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$categories}}</span>
+                                                                <span class="h2 font-weight-bold mb-0">{{$publicUnique}}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <img style="width: 50px" src="https://cdn-icons-png.flaticon.com/256/6360/6360268.png" alt="">
@@ -317,7 +318,7 @@
                                                             <div class="col">
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">
                                                                     Private</h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$categories}}</span>
+                                                                <span class="h2 font-weight-bold mb-0">{{$privateUnique}}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <img style="width: 50px" src="https://cdn-icons-png.flaticon.com/256/4413/4413865.png" alt="">
@@ -337,7 +338,7 @@
                                                             <div class="col">
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">
                                                                     Rate %</h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$categories}}</span>
+                                                                <span class="h2 font-weight-bold mb-0">{{$rateU}}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <img style="width: 50px" src="https://cdn-icons-png.flaticon.com/256/190/190411.png" alt="">
@@ -357,7 +358,7 @@
                                                             <div class="col">
                                                                 <h5 class="card-title text-uppercase text-muted mb-0">
                                                                    Launch Rate %</h5>
-                                                                <span class="h2 font-weight-bold mb-0">{{$categories}}</span>
+                                                                <span class="h2 font-weight-bold mb-0">{{$rateEU}}</span>
                                                             </div>
                                                             <div class="col-auto">
                                                                 <img style="width: 50px" src="https://cdn-icons-png.flaticon.com/256/1067/1067357.png" alt="">

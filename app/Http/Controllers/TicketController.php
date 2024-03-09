@@ -36,6 +36,7 @@ class TicketController extends Controller
         session()->forget('request_id');
         session()->forget('request_user_id');
         session()->forget('event_id');
+
         $user = $request_user_id;
  
        $ticket =  Ticket::create([
@@ -80,7 +81,7 @@ class TicketController extends Controller
 
     $dompdf->loadHtml($html);
 
-    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->setPaper('A5', 'landscape');
         
       
 

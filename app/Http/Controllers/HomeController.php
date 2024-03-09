@@ -13,7 +13,7 @@ class HomeController extends Controller
 
     public function index(){
         $dateTime = Carbon::createFromTimestamp(time());
-        $events = Event::where('status','accepted')->where('date','>',$dateTime)->where('tickets','>',0)->paginate(5);
+        $events = Event::where('status','accepted')->where('date','>',$dateTime)->where('tickets','>',0)->paginate(10);
         $user = Auth::user();
         $categories = Category::get();
         // $arr = [];
