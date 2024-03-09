@@ -31,11 +31,11 @@ class TicketController extends Controller
     public function create()
     {
 
-        // Retrieving $request_id from session
+        
         $request_id = session('request_id');
         $request_user_id = session('request_user_id');
         $event_id = session('event_id');
-        // Destroying $request_id from session
+        
         session()->forget('request_id');
         session()->forget('request_user_id');
         session()->forget('event_id');
@@ -56,11 +56,11 @@ class TicketController extends Controller
 
         $pdfContent = $this->generatePdf($ticket);
 
-        // Save PDF to storage
+        
         $pdfPath = 'pdf/' . uniqid() . '.pdf';
         Storage::disk('public')->put($pdfPath, $pdfContent);
 
-        // Update ticket record with PDF path
+       
         $ticket->pdf = $pdfPath;
         $ticket->save();
         
@@ -92,7 +92,6 @@ class TicketController extends Controller
 
     
 
-    // instantiate and use the dompdf class
     $options = new Options();
     $options->set('isRemoteEnabled', TRUE);
     $html = View::make('pdf',['ticket' => $ticket])->render();

@@ -1,9 +1,9 @@
 @extends('layout')
 @section('content')
 
-    <div class="flex justify-center mt-16">
-
+    <div class="flex justify-center mt-20">
         <div class="flex items-center justify-center gap-2 border-solid border-2 border-gray-300 rounded-lg w-fit p-4">
+
             <form class="max-w-lg mx-auto" id="searchForm" action="{{ route('events.search') }}" method="GET">
                 <div class="flex">
                     <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your
@@ -20,8 +20,8 @@
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
                             @foreach ($categories as $category)
                                 <li>
-                                    <a href="{{route('events.category',$category->id)}}"><button type="button"
-                                        class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{$category->name}}</button>
+                                    <a href="{{ route('events.category', $category->id) }}"><button type="button"
+                                            class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $category->name }}</button>
                                 </li></a>
                             @endforeach
 
@@ -46,6 +46,40 @@
 
 
         </div>
+
+    </div>
+    <div class="flex justify-center mt-7">
+
+
+        <div date-rangepicker class="flex items-center">
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                    </svg>
+                </div>
+                <input name="start" type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select date start">
+            </div>
+            <span class="mx-4 text-gray-500">to</span>
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                    </svg>
+                </div>
+                <input name="end" type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Select date end">
+            </div>
+        </div>
+
+
     </div>
 
     <div class="flex justify-center pt-5">
@@ -100,9 +134,8 @@
                                 {{ $event->date }}
                             </div>
 
-                            @if($user && $user->acces == 'banned' && $user->role != 'admin')
-                                <p
-                                    class="w-full  text-red-500 font-bold py-2 px-4 mt-4">You
+                            @if ($user && $user->acces == 'banned' && $user->role != 'admin')
+                                <p class="w-full  text-red-500 font-bold py-2 px-4 mt-4">You
                                     Are Banned from reserving </p>
                             @elseif ($user && $user->role != 'admin' && $user->reserveRequests->where('event_id', $event->id)->isNotEmpty())
                                 @php
@@ -115,7 +148,8 @@
                                         class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserved</button>
                                     <div style="text-align: center;padding-top:5px">
                                         <a style="font-size: 12px;text-decoration: underline;"
-                                        href="{{ asset('storage/' . $reserveRequest->ticket->pdf) }}" class="btn btn-success" download  >download your ticket</a>
+                                            href="{{ asset('storage/' . $reserveRequest->ticket->pdf) }}"
+                                            class="btn btn-success" download>download your ticket</a>
 
 
                                     </div>
@@ -137,13 +171,13 @@
                                         class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserve</button>
                                 </form>
                             @else
-                            <form action="{{ route('reserve.store') }}" method="post">
-                                @csrf
-                                @method('POST')
-                                <input type="hidden" id="event_id" name="event_id" value="{{ $event->id }}">
-                                <button type="submit"
-                                    class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserve</button>
-                            </form>
+                                <form action="{{ route('reserve.store') }}" method="post">
+                                    @csrf
+                                    @method('POST')
+                                    <input type="hidden" id="event_id" name="event_id" value="{{ $event->id }}">
+                                    <button type="submit"
+                                        class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-full">Reserve</button>
+                                </form>
                             @endif
 
 
