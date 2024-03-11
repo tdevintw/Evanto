@@ -12,6 +12,8 @@ use App\Http\Requests\UpdateTicketRequest;
 use App\Mail\TicketPdfEmail;
 use App\Models\Event;
 use App\Models\User;
+use Carbon\Carbon;
+use COM;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -76,13 +78,14 @@ class TicketController extends Controller
                     ->subject($data["title"])
                     ->attachData($pdf, "ticket.pdf");
         });
-  
+        
+        $user = Auth::user();
 
 
 
-            if($userEntity->role =='user'){
+            if($user->role =='user'){
                 return redirect()->route('profile.edit');
-            }elseif($userEntity->role =='organizer'){
+            }elseif($user->role =='organizer'){
                 return redirect()->route('reserve.index');
             }
     }
@@ -90,11 +93,13 @@ class TicketController extends Controller
 {
     $event = $ticket->request->event;
 
-    
-
+    $date = $event->date;
+    $date = Carbon::parse($date);
+    $dateformat = "D, M d • h:i A";
+    $date = $date->format($dateformat);
     $options = new Options();
     $options->set('isRemoteEnabled', TRUE);
-    $html = View::make('pdf',['ticket' => $ticket])->render();
+    $html = View::make('pdf',['ticket' => $ticket],['date'=>$date])->render();
     $dompdf = new Dompdf($options);
 
     $dompdf->loadHtml($html);

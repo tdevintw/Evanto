@@ -31,7 +31,7 @@
                 </div>
 
                 @isset($categories)
-                    <div style="margin-top:18px;cursor:pointer;" class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <div style="margin-top:20px;cursor:pointer;" class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-dropdown align="bottom" width="48" class="relative">
                             <x-slot name="trigger">
                                 <x-nav-link

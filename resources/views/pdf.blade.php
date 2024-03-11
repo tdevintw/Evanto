@@ -50,7 +50,7 @@
       .title{
         font-family: 'Courier New', Courier, monospace;
         color: white;
-        font-size: 10mm;
+        font-size: 7mm;
       }
       .event_image
       {
@@ -68,7 +68,7 @@
            <img class="event_image" src="https://wallpapercave.com/wp/wp2349395.jpg" alt=""> 
         </div>
         <div class="content">
-          <div style='margin-top: 8mm;'>
+          <div style='margin-top: 6mm;'>
             <div class="event-details">
               <div class="event-title">
                 <div style="width: 80mm;align-text:center">
@@ -83,7 +83,7 @@
             <h5 style="margin-top: 3mm;" class="infos">Name: {{$ticket->user->name}}</h5>
             <h5 class="infos">UID: {{$ticket->id}}</h5>
             <h5 class="infos">Location: {{$ticket->request->event->location}}</h5>
-            <h5 class="infos">Date: {{$ticket->request->event->date}}</h5>
+            <h5 class="infos">Date: {{$date}}</h5>
             <h5 class="infos">Reserved In: {{$ticket->created_at}}</h5>
           </div>
         </div>

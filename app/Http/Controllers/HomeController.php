@@ -16,7 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         $dateTime = Carbon::createFromTimestamp(time());
-        $events = Event::where('status', 'accepted')->where('date', '>', $dateTime)->where('tickets', '>', 0)->paginate(10);
+        $events = Event::where('status', 'accepted')->where('date', '>', $dateTime)->where('tickets', '>', 0)->paginate(12);
         $user = Auth::user();
         $categories = Category::get();
         // $arr = [];
@@ -68,6 +68,7 @@ class HomeController extends Controller
         $search = $request->input('search');
         $events = Event::where('status', 'accepted')
             ->where('title', 'like', '%' . $search . '%')
+            ->orWhere('location','like','%'.$search.'%')
             ->where('date', '>', $dateTime)
             ->where('tickets', '>', 0)
             ->get();
@@ -174,7 +175,7 @@ class HomeController extends Controller
             'start.required' => 'Start date cant be null',
             'end.required' => 'Ending date cant be null',
             'start.after_or_equal' => 'past date is invalid',
-            'end.before_or_equal' => 'max is 1 year further',
+            'end.before_or_equal' => 'end date 1 year max',
         ]);
 
 

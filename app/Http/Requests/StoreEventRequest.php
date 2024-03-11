@@ -27,19 +27,17 @@ class StoreEventRequest extends FormRequest
         $dateTimeY = Carbon::now()->addYear(1);
 
 
-        $dateTime = Carbon::now()->addYear();
-
-        
+        $dateTime = Carbon::now()->addMinutes(10);
 
         return [
             'title' => ['required', new EventRuleRequest,],
             'description' => ['required', new EventRuleRequest],
-            'category_id' => ['required','integer'],
-            'image' => 'required','image|mimes:jpeg,png,jpg,svg|max:2048',
+            'category_id' => ['required', 'integer'],
+            'image' => 'required', 'image|mimes:jpeg,png,jpg,svg|max:2048',
             'location' => ['required', new EventRuleRequest],
             'date' => ['required'],
             'date' => ['required', 'date', 'after_or_equal:' . $dateTime, 'before_or_equal:' . $dateTimeY],
-            'reserve_method' => ['required','in:default,request'],
+            'reserve_method' => ['required', 'in:default,request'],
             'tickets' => ['required', 'integer', 'max:100000'],
         ];
     }
@@ -58,7 +56,7 @@ class StoreEventRequest extends FormRequest
             'date.after_or_equal' => 'Date must be at least 10 min from now',
             'date.before_or_equal' => 'Max date is 1 year from now',
             'date.date' => 'date should be date',
-            
+
         ];
     }
 }
