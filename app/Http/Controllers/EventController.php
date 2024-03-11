@@ -52,7 +52,7 @@ class EventController extends Controller
         // $id = $user->id ;
 
         $formattedDateTime = Carbon::parse($request->date)->toDateTimeString();
-
+        
         Event::create([
             'organizer_id' => $request->organize_id,
             'title' => $request->title,

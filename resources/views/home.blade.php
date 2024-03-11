@@ -156,26 +156,23 @@
                         </a>
                         <div class="px-6 py-4">
                             <div class="font-bold text-xl mb-2">{{ $event->title }}</div>
-                            <p class="text-gray-700 text-base truncate w-64 overflow-hidden whitespace-nowrap">
-                                {{ $event->description }}</p>
                         </div>
                         <div class="px-6 pt-2 pb-4">
                             <div class="flex justify-between items-center mb-2">
                                 <div class="text-sm text-gray-600"><span class="font-medium">Organized by:</span>
                                     {{ $event->user->name }}</div>
-                                <div class="text-sm text-gray-600"><span class="font-medium">Tickets Left:</span>
-                                    {{ $event->tickets }}</div>
+
                             </div>
                             <div class="flex justify-between items-center mb-2">
                                 <div class="text-sm text-gray-600"><span class="font-medium">Location:</span>
                                     {{ $event->location }}</div>
-                                <div class="text-sm text-gray-600"><span class="font-medium">Category:</span>
-                                    <button
-                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full">{{ $event->category->name }}</button>
-                                </div>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="text-sm text-gray-600"><span class="font-medium">Left Tikcets:</span>
+                                    {{ $event->tickets }}</div>
                             </div>
                             <div class="text-sm text-gray-600"><span class="font-medium">Date:</span>
-                                {{ $event->date }}
+                                {{ $arr[$event->title] }}
                             </div>
 
                             @if ($user && $user->acces == 'banned' && $user->role != 'admin')

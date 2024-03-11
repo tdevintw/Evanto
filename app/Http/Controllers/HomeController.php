@@ -27,7 +27,16 @@ class HomeController extends Controller
         // }
         // $arr;
 
-        return view('home', compact('events', 'user', 'categories'));
+        $arr = [];
+
+        foreach ($events as $event) :
+            $inputDate = $event->date;
+            $carbonDate = Carbon::parse($inputDate);
+            $outputFormat = 'D, M d • h:i A';
+            $outputDate = $carbonDate->format($outputFormat);
+            $arr[$event->title] =   $outputDate;
+        endforeach;
+        return view('home', compact('events', 'user', 'categories', 'arr'));
     }
     public function role()
     {
@@ -39,7 +48,17 @@ class HomeController extends Controller
     public function more(Event $event)
     {
         $user = Auth::user();
-        return view('onepage', compact('event', 'user'));
+        $categories = Category::get();
+        $arr = [];
+
+
+        $inputDate = $event->date;
+        $carbonDate = Carbon::parse($inputDate);
+        $outputFormat = 'D, M d • h:i A';
+        $outputDate = $carbonDate->format($outputFormat);
+        $arr[$event->title] =   $outputDate;
+
+        return view('onepage', compact('event', 'user', 'categories', 'arr'));
     }
 
     public function search(Request $request)
@@ -55,7 +74,20 @@ class HomeController extends Controller
 
         $user = Auth::user();
         $categories = Category::get();
-        return view('discover', compact('events', 'user', 'categories'));
+
+
+
+        $arr = [];
+
+        foreach ($events as $event) :
+            $inputDate = $event->date;
+            $carbonDate = Carbon::parse($inputDate);
+            $outputFormat = 'D, M d • h:i A';
+            $outputDate = $carbonDate->format($outputFormat);
+            $arr[$event->title] =   $outputDate;
+        endforeach;
+
+        return view('discover', compact('events', 'user', 'categories', 'arr'));
     }
 
     public function category($id)
@@ -70,7 +102,19 @@ class HomeController extends Controller
 
         $user = Auth::user();
         $categories = Category::get();
-        return view('discover', compact('events', 'user', 'categories'));
+
+
+        $arr = [];
+
+        foreach ($events as $event) :
+            $inputDate = $event->date;
+            $carbonDate = Carbon::parse($inputDate);
+            $outputFormat = 'D, M d • h:i A';
+            $outputDate = $carbonDate->format($outputFormat);
+            $arr[$event->title] =   $outputDate;
+        endforeach;
+
+        return view('discover', compact('events', 'user', 'categories', 'arr'));
     }
     public function discover()
     {
@@ -82,13 +126,27 @@ class HomeController extends Controller
 
         $user = Auth::user();
         $categories = Category::get();
-        return view('discover', compact('events', 'user', 'categories'));
+
+
+
+        $arr = [];
+
+        foreach ($events as $event) :
+            $inputDate = $event->date;
+            $carbonDate = Carbon::parse($inputDate);
+            $outputFormat = 'D, M d • h:i A';
+            $outputDate = $carbonDate->format($outputFormat);
+            $arr[$event->title] =   $outputDate;
+        endforeach;
+
+        return view('discover', compact('events', 'user', 'categories', 'arr'));
     }
     public function date(Request $request)
     {
 
         $start  = $request->start;
         $end = $request->end;
+
         $start = Carbon::parse($start)->startOfDay();
         $end = Carbon::parse($end)->startOfDay();
 
@@ -102,24 +160,35 @@ class HomeController extends Controller
         $categories = Category::get();
         $time = time();
 
-        $time = Carbon::createFromTimestamp($time);
-        $timeY = $time->addYear(1);
-         $request->validate([
+        $time = Carbon::now()->toDateString();
+        $timeY = Carbon::now()->addYear(1)->toDateString();
+
+        $request->validate([
             'start' => 'required',
             'end'  => 'required',
-            'start' => 'after:'.$time,
-            'end'  => 'before:'.$timeY,
-            
- 
+            'start' => 'after_or_equal:' . $time,
+            'end'  => 'before_or_equal:' . $timeY,
+
+
         ], [
             'start.required' => 'Start date cant be null',
             'end.required' => 'Ending date cant be null',
-            'start.after' => 'past date is invalid',
-            'end.before' => 'max is 1 year further',
+            'start.after_or_equal' => 'past date is invalid',
+            'end.before_or_equal' => 'max is 1 year further',
         ]);
 
-        return view('discover', compact('events', 'user', 'categories'));
 
 
+        $arr = [];
+
+        foreach ($events as $event) :
+            $inputDate = $event->date;
+            $carbonDate = Carbon::parse($inputDate);
+            $outputFormat = 'D, M d • h:i A';
+            $outputDate = $carbonDate->format($outputFormat);
+            $arr[$event->title] =   $outputDate;
+        endforeach;
+
+        return view('discover', compact('events', 'user', 'categories', 'arr'));
     }
 }

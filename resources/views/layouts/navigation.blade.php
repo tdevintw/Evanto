@@ -140,14 +140,19 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    @auth
+   
         <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                     {{ __('home') }}
                 </x-responsive-nav-link>
+                @auth
                 <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                     {{ __('Dashboard') }}
+                </x-responsive-nav-link>
+                @endauth
+                <x-responsive-nav-link :href="route('discover')" :active="request()->routeIs('discover')">
+                    {{ __('discover') }}
                 </x-responsive-nav-link>
                 @isset($categories)
                     <div style="margin-left: 15px">
@@ -178,17 +183,11 @@
                                     @endforeach
 
                             </x-slot>
-
-
-
-
-
-
                         </x-dropdown>
                     </div>
                 @endisset
             </div>
-
+        @auth
             <!-- Responsive Settings Options -->
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="px-4">
@@ -216,12 +215,12 @@
         </div>
     @endauth
     @guest
-        <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+        {{-- <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
                     {{ __('home') }}
                 </x-responsive-nav-link>
-            </div>
+            </div> --}}
 
             <!-- Responsive Settings Options -->
             <div class="pt-4 pb-1 border-t border-gray-200">
