@@ -13,7 +13,7 @@ class ReserveRequest extends Model
     protected $fillable = [
         'user_id',
         'event_id',   
-        'status'   
+        'status'
     ];
     public function user(){
         return $this->belongsTo(User::class);

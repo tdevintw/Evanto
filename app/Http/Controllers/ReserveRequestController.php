@@ -38,7 +38,6 @@ class ReserveRequestController extends Controller
      */
     public function store(Request $request)
     {
-
         $event_id = $request->event_id;
         $id = Auth::user()->id;
         $event = Event::find($event_id);
@@ -46,7 +45,8 @@ class ReserveRequestController extends Controller
             $newRequest =  ReserveRequest::create([
                 'user_id' => $id,
                 'event_id' => $event_id,
-                'status' => 'accepted'
+                'status' => 'accepted',
+
             ]);
             $request_id = $newRequest->id;
             session(['request_id' => $request_id]);

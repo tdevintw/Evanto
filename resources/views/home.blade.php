@@ -157,6 +157,7 @@
                         <div class="px-6 py-4">
                             <div class="font-bold text-xl mb-2">{{ $event->title }}</div>
                         </div>
+                        
                         <div class="px-6 pt-2 pb-4">
                             <div class="flex justify-between items-center mb-2">
                                 <div class="text-sm text-gray-600"><span class="font-medium">Organized by:</span>

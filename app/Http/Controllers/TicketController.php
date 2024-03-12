@@ -37,8 +37,9 @@ class TicketController extends Controller
         $request_id = session('request_id');
         $request_user_id = session('request_user_id');
         $event_id = session('event_id');
-        
+
         session()->forget('request_id');
+        session()->forget('stock');
         session()->forget('request_user_id');
         session()->forget('event_id');
 
@@ -46,7 +47,7 @@ class TicketController extends Controller
         $userEntity = User::find($user);
         $ticket =  Ticket::create([
             'user_id' => $user,
-            'request_id' => $request_id
+            'request_id' => $request_id,
         ]);
 
         
