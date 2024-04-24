@@ -9,8 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <title>Evanto</title>
-    <link rel="icon" type="image/x-icon"
-        href="{{ asset('storage/images/ticket.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('storage/images/ticket.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -25,6 +24,7 @@
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/app-light.css') }}" id="lightTheme">
     <link rel="stylesheet" href="{{ asset('assets/css/app-dark.css') }}" id="darkTheme" disabled> --}}
 </head>
+
 <body>
     @include('layouts.navigation')
     @yield('content')
@@ -41,16 +41,16 @@
         }
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const dropdownButton = document.getElementById('dropdown-button');
             const dropdown = document.getElementById('dropdown');
 
-            dropdownButton.addEventListener('click', function () {
+            dropdownButton.addEventListener('click', function() {
                 dropdown.classList.toggle('hidden');
             });
 
             // Close dropdown when clicking outside
-            document.addEventListener('click', function (event) {
+            document.addEventListener('click', function(event) {
                 const isClickInsideDropdown = dropdown.contains(event.target);
                 const isClickInsideButton = dropdownButton.contains(event.target);
 
@@ -61,9 +61,12 @@
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
+    <script>
+        headers.append('Access-Control-Allow-Origin', 'https://evanto-production.up.railway.app/');
+        headers.append('Access-Control-Allow-Credentials', 'true');
+    </script>
 
 
-    
 </body>
 
 </html>
